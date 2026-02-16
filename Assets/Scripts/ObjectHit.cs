@@ -2,12 +2,21 @@ using UnityEngine;
 
 public class ObjectHit : MonoBehaviour
 {
-    void OnCollisionEnter(Collision others)
+    bool hasBeenHit = false;
+
+    public bool HasBeenHit()
     {
-        if(others.gameObject.tag == "Player")
+        return hasBeenHit;
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (hasBeenHit) return;
+
+        if (other.gameObject.CompareTag("Player"))
         {
-            GetComponent<MeshRenderer>().material.color = Color.clear;
-            gameObject.tag = "Hit";
+            hasBeenHit = true;
+            GetComponent<MeshRenderer>().material.color = Color.red;
         }
     }
 }
